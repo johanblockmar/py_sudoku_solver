@@ -6,6 +6,8 @@ yDiv = 3
 
 mainGrid = [[0 for x in range(xSize)] for y in range(ySize)] 
 
+testString = "5,3,0,0,7,0,0,0,0\n6,0,0,1,9,5,0,0,0\n0,9,8,0,0,0,0,6,0\n8,0,0,0,6,0,0,0,3\n4,0,0,8,0,3,0,0,1\n7,0,0,0,2,0,0,0,6\n0,6,0,0,0,0,2,8,0\n0,0,0,4,1,9,0,0,5\n0,0,0,0,8,0,0,7,9"
+
 '''
 Print grid in the look of a sudoku.
 grid: matrix to print.
@@ -22,7 +24,10 @@ def prettyPrintGrid(grid, divX, divY):
             if(x%divX==0):
                 lineStr+=" "
             
-            lineStr += str(grid[y][x]) + " "
+            if(grid[y][x] != 0):
+                lineStr += str(grid[y][x]) + " "
+            else:
+                lineStr += "_ "
 
         print(lineStr)
 
@@ -69,16 +74,15 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
     
     for y in range(len(grid)):
         l = lines[y].split(',')
-        grid[y] = l
+        for x in range(len(l)):
+            grid[y][x] = int(l[x])
 
     return grid
-
-
 
 def main():
     print("Welcome to the Sudoku Solver.\n")
 
-    grid = enterSudoku(xSize,ySize)
+    grid = enterSudoku(xSize,ySize,testString)
     if (grid == None):
         return
 
