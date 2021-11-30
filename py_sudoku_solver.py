@@ -34,8 +34,8 @@ def pretty_print_grid(grid, divx, divy):
         lineStr = ""
         for x in range(len(grid[0])):
             if x % divx == 0:
-                lineStr+=" "
-            
+                lineStr += " "
+
             if grid[y][x] != 0:
                 lineStr += str(grid[y][x]) + " "
             else:
@@ -52,8 +52,8 @@ def CheckSudokuLine(line, sizeX):
 
 def enterSudoku(sizeX, sizeY, sudokuString = None):
 
-    grid = [[0 for x in range(sizeX)] for y in range(sizeY)] 
-    
+    grid = [[0 for x in range(sizeX)] for y in range(sizeY)]
+
     if sudokuString == None:
         sudokuString = ""
 
@@ -80,10 +80,10 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
 
     # Parse string
     lines = sudokuString.split("\n")
-    
+
     if len(lines) != sizeY:
         return None
-    
+
     for y in range(len(grid)):
         l = lines[y].split(',')
         for x in range(len(l)):
@@ -110,12 +110,12 @@ def getColumnNumbers(grid,x):
 
 def getSquareNumbers(grid, x, y, divX, divY):
     squareNumbers = []
-    
+
     squareXmin = divX * int(float(x) / divX)
     squareXmax = squareXmin + divX
     squareYmin = divY * int(float(y) / divY)
     squareYmax = squareYmin + divY
-    
+
     for j in range(squareYmin,squareYmax):
         for i in range(squareXmin,squareXmax):
             if grid[j][i] != 0:
@@ -123,12 +123,11 @@ def getSquareNumbers(grid, x, y, divX, divY):
 
     return squareNumbers
 
-    
 
 def main():
     print("Welcome to the Sudoku Solver.\n")
 
-    grid = enterSudoku(X_SIZE,Y_SIZE,TEST_STRING)
+    grid = enterSudoku(X_SIZE, Y_SIZE, TEST_STRING)
     if grid == None:
         return
 
@@ -152,17 +151,17 @@ def main():
 
                     numbers = ln + cn + sn
                     numbers = sorted(numbers)
-                    
+
                     possible = []
-                    for i in range(1,10):
+                    for i in range(1, 10):
                         if i not in numbers:
                             possible.append(i)
-                    
+
                     if len(possible) == 1:
                         grid[y][x] = possible[0]
 
     print("Solved in {} passes.\nTime: {} ms".format(passes, (time.time()-start)*1000))
-    
+
 if __name__ == "__main__":
     main()
 
