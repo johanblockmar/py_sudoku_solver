@@ -28,15 +28,15 @@ divY: height of sudoku sub areas.
 '''
 def pretty_print_grid(grid, divx, divy):
     for y in range(len(grid)):
-        if(y%divy==0):
+        if y % divy == 0:
             print("")
 
         lineStr = ""
         for x in range(len(grid[0])):
-            if(x%divx ==0):
+            if x % divx == 0:
                 lineStr+=" "
             
-            if(grid[y][x] != 0):
+            if grid[y][x] != 0:
                 lineStr += str(grid[y][x]) + " "
             else:
                 lineStr += "_ "
@@ -44,7 +44,7 @@ def pretty_print_grid(grid, divx, divy):
         print(lineStr)
 
 def CheckSudokuLine(line, sizeX):
-    if(len(line) != 2 * sizeX - 1):
+    if len(line) != 2 * sizeX - 1:
         return False
 
     return True
@@ -54,7 +54,7 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
 
     grid = [[0 for x in range(sizeX)] for y in range(sizeY)] 
     
-    if(sudokuString == None):
+    if sudokuString == None:
         sudokuString = ""
 
         print("Please enter the sudoku, line by line.")
@@ -64,15 +64,15 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
 
         for y in range(len(grid)):
             done = False
-            while(not done):
+            while not done:
                 print("Please enter line {} of the sudoku".format(y+1))
                 line = input()
-                if(line == 'q'):
+                if line == 'q':
                     return None
 
-                if(CheckSudokuLine(line,sizeX)):
+                if CheckSudokuLine(line,sizeX):
                     sudokuString += line
-                    if(y < len(grid)-1):
+                    if y < len(grid)-1:
                         sudokuString += "\n"
                     done = True
                 else:
@@ -81,7 +81,7 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
     # Parse string
     lines = sudokuString.split("\n")
     
-    if(len(lines) != sizeY):
+    if len(lines) != sizeY:
         return None
     
     for y in range(len(grid)):
@@ -94,7 +94,7 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
 def getLineNumbers(grid,y):
     lineNumbers = []
     for i in range(len(grid[y])):
-        if(grid[y][i] != 0):
+        if grid[y][i] != 0:
             lineNumbers.append(grid[y][i])
 
     return lineNumbers
@@ -103,7 +103,7 @@ def getColumnNumbers(grid,x):
     columnNumbers = []
 
     for j in range(len(grid)):
-        if(grid[j][x] != 0):
+        if grid[j][x] != 0:
             columnNumbers.append(grid[j][x])
 
     return columnNumbers
@@ -118,7 +118,7 @@ def getSquareNumbers(grid, x, y, divX, divY):
     
     for j in range(squareYmin,squareYmax):
         for i in range(squareXmin,squareXmax):
-            if(grid[j][i] != 0):
+            if grid[j][i] != 0:
                 squareNumbers.append(grid[j][i])
 
     return squareNumbers
@@ -129,14 +129,14 @@ def main():
     print("Welcome to the Sudoku Solver.\n")
 
     grid = enterSudoku(X_SIZE,Y_SIZE,TEST_STRING)
-    if (grid == None):
+    if grid == None:
         return
 
     passes = 0
     done = False
 
     start = time.time()
-    while(not done):
+    while not done:
         done = True
         passes += 1
         pretty_print_grid(grid, X_DIV, Y_DIV)
@@ -144,7 +144,7 @@ def main():
 
         for y in range(len(grid)):
             for x in range(len(grid[0])):
-                if(grid[y][x] == 0):
+                if grid[y][x] == 0:
                     done = False
                     ln = getLineNumbers(grid, y)
                     cn = getColumnNumbers(grid, x)
@@ -155,10 +155,10 @@ def main():
                     
                     possible = []
                     for i in range(1,10):
-                        if(i not in numbers):
+                        if i not in numbers:
                             possible.append(i)
                     
-                    if(len(possible) == 1):
+                    if len(possible) == 1:
                         grid[y][x] = possible[0]
 
     print("Solved in {} passes.\nTime: {} ms".format(passes, (time.time()-start)*1000))
