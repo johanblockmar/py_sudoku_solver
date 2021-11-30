@@ -31,31 +31,31 @@ def pretty_print_grid(grid, divx, divy):
         if y % divy == 0:
             print("")
 
-        lineStr = ""
+        line_string = ""
         for x in range(len(grid[0])):
             if x % divx == 0:
-                lineStr += " "
+                line_string += " "
 
             if grid[y][x] != 0:
-                lineStr += str(grid[y][x]) + " "
+                line_string += str(grid[y][x]) + " "
             else:
-                lineStr += "_ "
+                line_string += "_ "
 
-        print(lineStr)
+        print(line_string)
 
-def CheckSudokuLine(line, sizeX):
-    if len(line) != 2 * sizeX - 1:
+def check_sudoku_line(line, size_x):
+    if len(line) != 2 * size_x - 1:
         return False
 
     return True
 
 
-def enterSudoku(sizeX, sizeY, sudokuString = None):
+def enter_sudoku(size_x, size_y, sudoku_string=None):
 
-    grid = [[0 for x in range(sizeX)] for y in range(sizeY)]
+    grid = [[0 for x in range(size_x)] for y in range(size_y)]
 
-    if sudokuString == None:
-        sudokuString = ""
+    if sudoku_string is None:
+        sudoku_string = ""
 
         print("Please enter the sudoku, line by line.")
         print("Each character should be seperated by a \",\"")
@@ -70,18 +70,18 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
                 if line == 'q':
                     return None
 
-                if CheckSudokuLine(line,sizeX):
-                    sudokuString += line
+                if check_sudoku_line(line, size_x):
+                    sudoku_string += line
                     if y < len(grid)-1:
-                        sudokuString += "\n"
+                        sudoku_string += "\n"
                     done = True
                 else:
                     print("Invalid, try again")
 
     # Parse string
-    lines = sudokuString.split("\n")
+    lines = sudoku_string.split("\n")
 
-    if len(lines) != sizeY:
+    if len(lines) != size_y:
         return None
 
     for y in range(len(grid)):
@@ -91,44 +91,44 @@ def enterSudoku(sizeX, sizeY, sudokuString = None):
 
     return grid
 
-def getLineNumbers(grid,y):
-    lineNumbers = []
+def get_line_numbers(grid, y):
+    line_numbers = []
     for i in range(len(grid[y])):
         if grid[y][i] != 0:
-            lineNumbers.append(grid[y][i])
+            line_numbers.append(grid[y][i])
 
-    return lineNumbers
+    return line_numbers
 
-def getColumnNumbers(grid,x):
-    columnNumbers = []
+def get_column_numbers(grid, x):
+    column_numbers = []
 
     for j in range(len(grid)):
         if grid[j][x] != 0:
-            columnNumbers.append(grid[j][x])
+            column_numbers.append(grid[j][x])
 
-    return columnNumbers
+    return column_numbers
 
-def getSquareNumbers(grid, x, y, divX, divY):
-    squareNumbers = []
+def get_square_numbers(grid, x, y, div_x, div_y):
+    square_numbers = []
 
-    squareXmin = divX * int(float(x) / divX)
-    squareXmax = squareXmin + divX
-    squareYmin = divY * int(float(y) / divY)
-    squareYmax = squareYmin + divY
+    square_x_min = div_x * int(float(x) / div_x)
+    square_x_max = square_x_min + div_x
+    square_y_min = div_y * int(float(y) / div_y)
+    square_y_max = square_y_min + div_y
 
-    for j in range(squareYmin,squareYmax):
-        for i in range(squareXmin,squareXmax):
+    for j in range(square_y_min, square_y_max):
+        for i in range(square_x_min, square_x_max):
             if grid[j][i] != 0:
-                squareNumbers.append(grid[j][i])
+                square_numbers.append(grid[j][i])
 
-    return squareNumbers
+    return square_numbers
 
 
 def main():
     print("Welcome to the Sudoku Solver.\n")
 
-    grid = enterSudoku(X_SIZE, Y_SIZE, TEST_STRING)
-    if grid == None:
+    grid = enter_sudoku(X_SIZE, Y_SIZE, TEST_STRING)
+    if grid is None:
         return
 
     passes = 0
@@ -145,9 +145,9 @@ def main():
             for x in range(len(grid[0])):
                 if grid[y][x] == 0:
                     done = False
-                    ln = getLineNumbers(grid, y)
-                    cn = getColumnNumbers(grid, x)
-                    sn = getSquareNumbers(grid, x, y, X_DIV, Y_DIV)
+                    ln = get_line_numbers(grid, y)
+                    cn = get_column_numbers(grid, x)
+                    sn = get_square_numbers(grid, x, y, X_DIV, Y_DIV)
 
                     numbers = ln + cn + sn
                     numbers = sorted(numbers)
