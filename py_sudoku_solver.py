@@ -145,11 +145,11 @@ def main():
             for x in range(len(grid[0])):
                 if grid[y][x] == 0:
                     done = False
-                    ln = get_line_numbers(grid, y)
-                    cn = get_column_numbers(grid, x)
-                    sn = get_square_numbers(grid, x, y, X_DIV, Y_DIV)
+                    line_numbers = get_line_numbers(grid, y)
+                    column_numbers = get_column_numbers(grid, x)
+                    square_numbers = get_square_numbers(grid, x, y, X_DIV, Y_DIV)
 
-                    numbers = ln + cn + sn
+                    numbers = line_numbers + column_numbers + square_numbers
                     numbers = sorted(numbers)
 
                     possible = []
